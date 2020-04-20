@@ -1,0 +1,88 @@
+subprojects {
+
+	repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "http://repo.bodar.com"
+        }
+	}
+
+	ext {
+		spring_version = '1.0.8.RELEASE'
+		springboot_version = '2.2.2.RELEASE'
+	}
+
+	ext.libs = [
+		unit_tests : [
+			dependencies.create("org.springframework.boot:spring-boot-starter-test:${springboot_version}") {
+				exclude group: 'org.junit.vintage',
+				module: 'junit-vintage-engine'
+			},
+			"org.hamcrest:hamcrest:2.2",
+		],
+		acceptance_tests : [
+
+		],
+		integration_test : [
+
+		],
+		end_to_end_test : [
+
+		],
+		spring_boot : [
+			"org.springframework.boot:spring-boot-starter-web:${springboot_version}",
+			"org.springframework.boot:spring-boot-starter-actuator:${springboot_version}",
+			"org.springframework.boot:spring-boot-starter-logging:${springboot_version}",
+			"io.spring.gradle:dependency-management-plugin:${spring_version}",
+		],
+		rest : [
+			"org.springframework.boot:spring-boot-starter-web:${springboot_version}",
+		],
+		database_initialisation : [
+
+		],
+		database : [
+
+		],
+		string_utils : [
+
+		],
+		log : [
+
+		]
+	]
+}
+
+// apply java plugin to all modules
+configure(allprojects - project(":application")) {
+	apply plugin: "java"
+	apply plugin: "jacoco"
+
+	group = 'com.example'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '1.8'
+
+	test {
+		useJUnitPlatform()
+	}
+
+	jacocoTestCoverageVerification {
+		violationRules {
+			rule {
+				element = 'METHOD'
+					limit {
+					counter = 'LINE'
+					value = 'COVEREDRATIO'
+					minimum = 1.0
+				}
+				excludes = [
+					'com.example.springboot.Application.main(java.lang.String[])'
+				]
+			}
+		}
+	}
+
+	test.finalizedBy jacocoTestReport
+	check.dependsOn jacocoTestCoverageVerification
+}
