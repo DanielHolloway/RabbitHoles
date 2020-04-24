@@ -23,10 +23,6 @@ OpenJDK 64-Bit Server VM 18.9 (build 11+28, mixed mode)
 
 `java -jar application/spring-app/build/libs/spring-app-1.0.0.jar`
 
-### Run Vertx example
-
-`java -jar application/vertx-app/build/libs/vertx-app-1.0.0-fat.jar`
-
 ### Use the webbapps
 
 #### Create Article
