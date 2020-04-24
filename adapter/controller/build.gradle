@@ -1,0 +1,10 @@
+apply plugin: 'java-library'
+
+ext.moduleName = 'rabbitholes.controller'
+
+dependencies {
+	implementation(
+		project(':usecase'),
+		project(':domain'),
+	)
+}

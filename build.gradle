@@ -1,96 +1,28 @@
 subprojects {
+	apply plugin: 'java'
+
+	group = 'com.rabbitholes'
+	version = '1.0.0'
+
+	sourceCompatibility = 1.11
+	targetCompatibility = 1.11
 
 	repositories {
-        mavenLocal()
-        mavenCentral()
-        maven {
-            url "http://repo.bodar.com"
-        }
+		jcenter()
 	}
+	afterEvaluate {
+		repositories {
+			jcenter()
+		}
 
-	ext {
-		spring_version = '4.2.5.RELEASE'
-		springboot_version = '2.2.6.RELEASE'
-	}
-
-	ext.libs = [
-		unit_tests : [
-			"junit:junit:4.+",
-			"org.mockito:mockito-core:1.10.19",
-			"org.assertj:assertj-core:3.3.0"
-		],
-		acceptance_tests : [
-
-		],
-		integration_test : [
-
-		],
-		end_to_end_test : [
-
-		],
-		spring_boot : [
-			"org.springframework.boot:spring-boot-starter-web:${springboot_version}",
-			"org.springframework.boot:spring-boot-starter-logging:${springboot_version}",
-			"org.springframework:spring-context:2.0.5",
-    		//"org.springframework.boot:spring-boot-starter-data-jpa:${springboot_version}",
-			//"io.spring.gradle:dependency-management-plugin",
-		],
-		rest : [
-			"org.springframework.boot:spring-boot-starter-web:${springboot_version}",
-		],
-		database_initialisation : [
-
-		],
-		database : [
-
-		],
-		string_utils : [
-
-		],
-		log : [
-
-		]
-	]
-}
-
-// apply java plugin to all modules
-configure(allprojects - project(":application")) {
-	apply plugin: "java"
-	// apply plugin: "jacoco"
-
-	// group = 'com.rabbitholes'
-	// version = '0.0.1-SNAPSHOT'
-	sourceCompatibility = '1.8'
-
-	// generate the main application jar in the "application" folder, to make it easier to find
-	jar {
-		manifest {
-			attributes(
-				'Main-Class': 'com.rabbitholes.Application'
-			)
+		compileJava {
+			inputs.property("moduleName", moduleName)
+			doFirst {
+				options.compilerArgs = [
+					'--module-path', classpath.asPath,
+				]
+				classpath = files()
+			}
 		}
 	}
-
-	// test {
-	// 	useJUnitPlatform()
-	// }
-
-	// jacocoTestCoverageVerification {
-	// 	violationRules {
-	// 		rule {
-	// 			element = 'METHOD'
-	// 				limit {
-	// 				counter = 'LINE'
-	// 				value = 'COVEREDRATIO'
-	// 				minimum = 1.0
-	// 			}
-	// 			excludes = [
-	// 				'com.example.springboot.Application.main(java.lang.String[])'
-	// 			]
-	// 		}
-	// 	}
-	// }
-
-	// test.finalizedBy jacocoTestReport
-	// check.dependsOn jacocoTestCoverageVerification
 }

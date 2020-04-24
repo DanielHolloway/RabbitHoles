@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+
+ext.moduleName = 'rabbitholes.config'
+
+dependencies {
+	implementation(
+		project(':usecase'),
+		project(':domain'),
+		project(':in-memory-db-simple'),
+		project(':in-memory-db-hazelcast'),
+		project(':jug'),
+		project(':uuid'),
+		project(':controller'),
+	)
+}

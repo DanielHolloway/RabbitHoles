@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+
+ext.moduleName = 'rabbitholes.uuid'
+
+dependencies {
+	implementation(
+		project(':usecase')
+	)
+}
