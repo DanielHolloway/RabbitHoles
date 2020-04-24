@@ -13,11 +13,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 public class GetArticleEndpoint {
 
+
 	public static final String API_PATH = "/";
 
-	// To-do: integrate with logger
+	// // To-do: integrate with logger
 
-    // private static final Logger LOGGER = LoggerFactory.getLogger(GetBroadbandAccessDeviceEndpoint.class);
+    // // private static final Logger LOGGER = LoggerFactory.getLogger(GetBroadbandAccessDeviceEndpoint.class);
 
     private GetArticleUseCase getArticleUseCase;
 
@@ -26,7 +27,8 @@ public class GetArticleEndpoint {
     }
 
 	@RequestMapping(value = API_PATH, method = GET)
-	public ArticleDto getArticle(@PathVariable String title) {
+	public ArticleDto getArticle(@PathVariable String title) {  //
+		//return "DEEZ NUTZ!";
         // LOGGER.info("Retrieving details of article: {}", title);
         try {
             Article article = getArticleUseCase.getArticle(title);
