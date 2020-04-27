@@ -1,7 +1,5 @@
 apply plugin: 'java-library'
 
-ext.moduleName = 'rabbitholes.main'
-
 dependencies {
 	implementation(
 		project(':config'),

@@ -1,4 +1,4 @@
-rootProject.name = 'clean-architecture-example'
+rootProject.name = 'rabbitholes'
 
 include ':config'
 include ':domain'
@@ -13,11 +13,14 @@ include ':controller'
 include ':manual-app'
 include ':spring-app'
 
-project(":jug").projectDir = file("adapter/id-generator/jug")
-project(":uuid").projectDir = file("adapter/id-generator/uuid")
-project(":in-memory-db-simple").projectDir = file("adapter/repository/in-memory-simple")
-project(":in-memory-db-hazelcast").projectDir = file("adapter/repository/in-memory-hazelcast")
-project(":controller").projectDir = file("adapter/controller")
+project(":config").projectDir = file("application/config")
+project(":domain").projectDir = file("application/domain")
+project(":usecase").projectDir = file("application/usecase")
+project(":jug").projectDir = file("application/adapter/id-generator/jug")
+project(":uuid").projectDir = file("application/adapter/id-generator/uuid")
+project(":in-memory-db-simple").projectDir = file("application/adapter/repository/in-memory-simple")
+project(":in-memory-db-hazelcast").projectDir = file("application/adapter/repository/in-memory-hazelcast")
+project(":controller").projectDir = file("application/adapter/controller")
 //project(":spring-controller").projectDir = file("adapter/controller/spring-controller")
 
 project(":manual-app").projectDir = file("application/manual-app")

@@ -1,6 +1,8 @@
 subprojects {
 	apply plugin: 'java'
 
+	//buildDir = "~/application/build/${rootProject.name}/${project.name}"
+
 	group = 'com.rabbitholes'
 	version = '1.0.0'
 
@@ -16,13 +18,13 @@ subprojects {
 		}
 
 		compileJava {
-			inputs.property("moduleName", moduleName)
-			doFirst {
-				options.compilerArgs = [
-					'--module-path', classpath.asPath,
-				]
-				classpath = files()
-			}
+//			inputs.property("moduleName", moduleName)
+//			doFirst {
+//				options.compilerArgs = [
+//					'--module-path', classpath.asPath,
+//				]
+//				classpath = files()
+//			}
 		}
 	}
 }
