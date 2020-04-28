@@ -7,4 +7,12 @@ dependencies {
 		project(':usecase'),
 		project(':domain'),
 	)
+	testImplementation(
+		project(':usecase'),
+		project(':domain'),
+		'org.apache.commons:commons-lang3:3.7',
+		'junit:junit:4.+',
+		'org.assertj:assertj-core:3.3.0',
+		'org.mockito:mockito-core:1.10.19'
+	)
 }
