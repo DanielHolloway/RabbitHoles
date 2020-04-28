@@ -50,7 +50,19 @@ public class CreateArticleTest {
 
         when(repository.findByTitle(expectedArticle.getTitle())).thenReturn(Optional.empty());
         when(idGenerator.generate()).thenReturn("article1");
-        when(repository.create(any(Article.class))).thenReturn(expectedArticle);
+        when(repository.create(any(Article.class)))
+                .thenAnswer( invocation -> {
+                    Article paramObj = invocation.getArgumentAt(0, Article.class);
+                    if (paramObj.getId().equals(expectedArticle.getId()) &&
+                            paramObj.getTitle().equals(expectedArticle.getTitle()) &&
+                            paramObj.getTopic().equals(expectedArticle.getTopic()) &&
+                            paramObj.getLink().equals(expectedArticle.getLink())) {
+                        return expectedArticle;
+                    }
+                    else{
+                        return any(Article.class);
+                    }
+                });
         return expectedArticle;
     }
 
