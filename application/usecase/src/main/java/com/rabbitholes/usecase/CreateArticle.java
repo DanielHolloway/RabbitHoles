@@ -27,10 +27,6 @@ public final class CreateArticle {
 			.topic(article.getTopic())
 			.link(article.getLink())
 			.build();
-		System.out.println("Inside CreateArticle.java");
-		System.out.println(articleToSave.toString());
-		var tempRet = repository.create(articleToSave);
-		System.out.println(tempRet);
-		return tempRet;
+		return repository.create(articleToSave);
 	}
 }

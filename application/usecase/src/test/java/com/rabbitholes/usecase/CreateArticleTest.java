@@ -2,9 +2,9 @@ package com.rabbitholes.usecase;
 
 import com.rabbitholes.domain.entity.Article;
 import com.rabbitholes.usecase.exception.ArticleAlreadyExistsException;
+import com.rabbitholes.usecase.exception.ArticleValidationException;
 import com.rabbitholes.usecase.port.IdGenerator;
 import com.rabbitholes.usecase.port.ArticleRepository;
-import com.rabbitholes.usecase.validator.ArticleValidator;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -35,9 +35,67 @@ public class CreateArticleTest {
                 .build();
 
         var actualArticle = createArticle.create(testArticle);
-        System.out.println(expectedArticle.toString());
-        System.out.println(actualArticle.toString());
         assertThat(actualArticle).isEqualTo(expectedArticle);
+    }
+
+    @Test
+    public void errorWhenCreatingAnArticleThatExists() throws Exception {
+        givenAnArticleAlreadyExists();
+
+        Article testArticle = Article.builder()
+                .id("article1")
+                .title("Article 1")
+                .topic("Test")
+                .link("test.com")
+                .build();
+
+        assertThatExceptionOfType(ArticleAlreadyExistsException.class)
+                .isThrownBy(() -> createArticle.create(testArticle));
+    }
+
+    @Test
+    public void errorWhenCreatingAnArticleWithoutArticle() throws Exception {
+        assertThatExceptionOfType(ArticleValidationException.class)
+                .isThrownBy(() -> createArticle.create(null));
+    }
+
+    @Test
+    public void errorWhenCreatingAnArticleWithoutTitle() throws Exception {
+        Article testArticle = Article.builder()
+                .id("article1")
+                .title("")
+                .topic("Test")
+                .link("test.com")
+                .build();
+
+        assertThatExceptionOfType(ArticleValidationException.class)
+                .isThrownBy(() -> createArticle.create(testArticle));
+    }
+
+    @Test
+    public void errorWhenCreatingAnArticleWithoutTopic() throws Exception {
+        Article testArticle = Article.builder()
+                .id("article1")
+                .title("Article 1")
+                .topic("")
+                .link("test.com")
+                .build();
+
+        assertThatExceptionOfType(ArticleValidationException.class)
+                .isThrownBy(() -> createArticle.create(testArticle));
+    }
+
+    @Test
+    public void errorWhenCreatingAnArticleWithoutLink() throws Exception {
+        Article testArticle = Article.builder()
+                .id("article1")
+                .title("Article 1")
+                .topic("Test")
+                .link("")
+                .build();
+
+        assertThatExceptionOfType(ArticleValidationException.class)
+                .isThrownBy(() -> createArticle.create(testArticle));
     }
 
     private Article givenAnArticleIsCreated() {
@@ -64,6 +122,17 @@ public class CreateArticleTest {
                     }
                 });
         return expectedArticle;
+    }
+
+    private void givenAnArticleAlreadyExists() {
+        Article existingArticle = Article.builder()
+                .id("article1")
+                .title("Article 1")
+                .topic("Test")
+                .link("test.com")
+                .build();
+
+        when(repository.findByTitle(existingArticle.getTitle())).thenReturn(Optional.of(existingArticle));
     }
 
 }
