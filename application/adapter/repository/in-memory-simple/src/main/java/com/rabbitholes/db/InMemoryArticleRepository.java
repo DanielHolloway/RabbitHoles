@@ -2,6 +2,7 @@ package com.rabbitholes.db;
 
 import com.rabbitholes.domain.entity.Article;
 import com.rabbitholes.usecase.port.ArticleRepository;
+import com.rabbitholes.db.exception.InvalidArticleException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,9 @@ public class InMemoryArticleRepository implements ArticleRepository {
 
 	@Override
 	public Article create(final Article article) {
+		if (article.getId() == null){
+			throw new InvalidArticleException("Article supplied to repository is missing a valid ID");
+		}
 		inMemoryDb.put(article.getId(), article);
 		return article;
 	}

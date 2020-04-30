@@ -11,8 +11,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +53,7 @@ public class CreateArticleTest {
     }
 
     @Test
-    public void errorWhenCreatingAnArticleWithoutArticle() throws Exception {
+    public void errorWhenCreatingAnEmptyArticle() throws Exception {
         assertThatExceptionOfType(ArticleValidationException.class)
                 .isThrownBy(() -> createArticle.create(null));
     }
@@ -110,7 +109,7 @@ public class CreateArticleTest {
         when(idGenerator.generate()).thenReturn("article1");
         when(repository.create(any(Article.class)))
                 .thenAnswer( invocation -> {
-                    Article paramObj = invocation.getArgumentAt(0, Article.class);
+                    Article paramObj = invocation.getArgument(0);
                     if (paramObj.getId().equals(expectedArticle.getId()) &&
                             paramObj.getTitle().equals(expectedArticle.getTitle()) &&
                             paramObj.getTopic().equals(expectedArticle.getTopic()) &&

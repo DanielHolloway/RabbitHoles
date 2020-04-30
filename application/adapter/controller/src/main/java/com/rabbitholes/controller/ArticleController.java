@@ -22,7 +22,7 @@ public class ArticleController {
 	}
 
 	public ArticleWeb getArticle(final String articleId) {
-		return ArticleWeb.toArticleWeb(findArticle.findById(articleId).orElseThrow(() -> new RuntimeException("article not found")));
+		return ArticleWeb.toArticleWeb(findArticle.findById(articleId).orElseThrow(() -> new RuntimeException("Article not found")));
 	}
 
 	public List<ArticleWeb> allArticles() {
