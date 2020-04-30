@@ -2,13 +2,11 @@ package com.rabbitholes.spring.controller;
 
 import com.rabbitholes.controller.ArticleController;
 import com.rabbitholes.controller.model.ArticleWeb;
-import java.util.List;
 
 import com.rabbitholes.spring.controller.exception.SpringArticleAlreadyExistsException;
 import com.rabbitholes.spring.controller.exception.SpringArticleValidationException;
 import com.rabbitholes.usecase.exception.ArticleAlreadyExistsException;
 import com.rabbitholes.usecase.exception.ArticleValidationException;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
