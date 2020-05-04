@@ -26,7 +26,7 @@ public class SearchArticleTest {
     public void returnsArticles() throws Exception {
         List<Article> expectedArticles = givenArticlesAreReturned();
 
-        List<Article> actualArticles = externalApi.searchByTitle("Article");
+        List<Article> actualArticles = searchArticle.searchByTitle("Article");
 
         Assert.assertArrayEquals(actualArticles.toArray(),expectedArticles.toArray());
 
@@ -36,7 +36,7 @@ public class SearchArticleTest {
     public void findsNoArticles() throws Exception {
         givenNoArticlesAreReturned();
 
-        List<Article> actualArticles = externalApi.searchByTitle("Article");
+        List<Article> actualArticles = searchArticle.searchByTitle("Article");
 
         assertThat(actualArticles.size() == 0);
     }

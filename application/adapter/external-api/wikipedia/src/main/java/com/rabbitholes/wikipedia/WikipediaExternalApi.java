@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import com.rabbitholes.domain.entity.Article;
 import com.rabbitholes.usecase.port.ExternalApi;
 import com.rabbitholes.wikipedia.exception.WikipediaApiFailedException;
+import com.rabbitholes.wikipedia.exception.WikipediaBadSearchParameterException;
 import com.rabbitholes.wikipedia.exception.WikipediaFutureException;
 import com.rabbitholes.wikipedia.exception.WikipediaJSONParsingException;
 import com.rabbitholes.wikipedia.model.WikipediaArticle;
 import com.rabbitholes.wikipedia.model.WikipediaQuery;
 import com.rabbitholes.wikipedia.model.WikipediaSearch;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -19,15 +19,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
-import static java.util.Collections.emptyList;
 
 public class WikipediaExternalApi implements ExternalApi {
 
@@ -37,20 +33,17 @@ public class WikipediaExternalApi implements ExternalApi {
         try{
             uri = "https://en.wikipedia.org/w/api.php?action=query&list=search&srlimit=5&srsearch=" +
                     URLEncoder.encode(title, StandardCharsets.UTF_8.toString()) + "&format=json";
-        }
-        catch(UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getCause());
+        } catch(UnsupportedEncodingException e) {
+            throw new WikipediaBadSearchParameterException("Bad search parameter could not be encoded for Wikipedia");
         }
 
         CompletableFuture<List<Article>> completableFuture = getArticlesFromWikipediaSearch(uri);
 
         try{
             return completableFuture.get();
-        }
-        catch(CancellationException | ExecutionException | InterruptedException e){
+        } catch(CancellationException | ExecutionException | InterruptedException e){
             throw new WikipediaFutureException("Future failed during Wikipedia search API call");
-        }
-        catch(RuntimeException e){
+        } catch(RuntimeException e){
             throw new WikipediaApiFailedException("Wikipedia search API returned invalid response");
         }
     }
@@ -73,26 +66,24 @@ public class WikipediaExternalApi implements ExternalApi {
         Gson gson = new Gson();
 
         WikipediaSearch wikipediaSearch;
+        WikipediaQuery wikipediaQuery;
+        List<WikipediaArticle> wikipediaArticles;
 
         try {
             wikipediaSearch = gson.fromJson(content, WikipediaSearch.class);
-        }
-        catch(RuntimeException e) {
+        } catch(RuntimeException e) {
             throw new WikipediaJSONParsingException("Parsing Wikipedia's returned JSON resulted in a failure");
         }
 
-        WikipediaQuery wikipediaQuery;
         try{
             wikipediaQuery = wikipediaSearch.getWikipediaQuery();
-        }
-        catch(RuntimeException e){
+        } catch(RuntimeException e){
             throw new WikipediaJSONParsingException("Failed to get query property from Wikipedia response.");
         }
-        List<WikipediaArticle> wikipediaArticles;
+
         try{
             wikipediaArticles = wikipediaQuery.getWikipediaArticles();
-        }
-        catch(RuntimeException e){
+        } catch(RuntimeException e){
             throw new WikipediaJSONParsingException("Failed to get articles property from Wikipedia response.");
         }
 

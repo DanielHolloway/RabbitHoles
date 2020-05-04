@@ -16,6 +16,7 @@ dependencies {
 		project(':config'),
 		project(':usecase'),
 		project(':controller'),
+		project(':external-api'),
 		'org.springframework.boot:spring-boot-starter-web',
 		'com.fasterxml.jackson.core:jackson-core:2.9.5',
 	)
@@ -23,6 +24,7 @@ dependencies {
 			project(':config'),
 			project(':usecase'),
 			project(':controller'),
+			project(':external-api'),
 			'org.springframework.boot:spring-boot-starter-web',
 			'com.fasterxml.jackson.core:jackson-core:2.9.5',
 			'org.apache.commons:commons-lang3:3.7',

@@ -6,10 +6,12 @@ dependencies {
 	implementation(
 		project(':usecase'),
 		project(':domain'),
+		project(':external-api')
 	)
 	testImplementation(
 		project(':usecase'),
 		project(':domain'),
+		project(':external-api'),
 		'org.apache.commons:commons-lang3:3.7',
 		'junit:junit:4.+',
 		'org.assertj:assertj-core:3.3.0',
