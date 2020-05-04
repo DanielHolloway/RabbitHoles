@@ -3,6 +3,7 @@ rootProject.name = 'rabbitholes'
 include ':config'
 include ':domain'
 include ':usecase'
+include ':external-api'
 include ':jug'
 include ':uuid'
 include ':in-memory-db-simple'
@@ -16,6 +17,7 @@ include ':spring-app'
 project(":config").projectDir = file("application/config")
 project(":domain").projectDir = file("application/domain")
 project(":usecase").projectDir = file("application/usecase")
+project(":external-api").projectDir = file("application/adapter/external-api/wikipedia")
 project(":jug").projectDir = file("application/adapter/id-generator/jug")
 project(":uuid").projectDir = file("application/adapter/id-generator/uuid")
 project(":in-memory-db-simple").projectDir = file("application/adapter/repository/in-memory-simple")

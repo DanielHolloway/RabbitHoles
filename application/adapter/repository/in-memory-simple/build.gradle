@@ -1,7 +1,5 @@
 apply plugin: 'java-library'
 
-ext.moduleName = 'rabbitholes.db.simple'
-
 dependencies {
 	implementation(
 		project(':domain'),

@@ -6,6 +6,7 @@ dependencies {
 		project(':domain'),
 		project(':in-memory-db-simple'),
 		project(':in-memory-db-hazelcast'),
+		project(':external-api'),
 		project(':jug'),
 		project(':uuid'),
 		project(':controller'),

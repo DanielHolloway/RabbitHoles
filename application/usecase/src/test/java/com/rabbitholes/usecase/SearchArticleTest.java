@@ -27,7 +27,7 @@ public class SearchArticleTest {
         List<Article> expectedArticles = givenArticlesAreReturned();
 
         List<Article> actualArticles = externalApi.searchByTitle("Article");
-        
+
         Assert.assertArrayEquals(actualArticles.toArray(),expectedArticles.toArray());
 
     }

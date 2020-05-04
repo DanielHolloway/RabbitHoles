@@ -1,0 +1,18 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation(
+            project(':domain'),
+            project(':usecase'),
+            'com.google.code.gson:gson:2.8.6'
+    )
+    testImplementation(
+            project(':domain'),
+            project(':usecase'),
+            'com.google.code.gson:gson:2.8.6',
+            'org.apache.commons:commons-lang3:3.7',
+            'junit:junit:4.+',
+            'org.assertj:assertj-core:3.3.0',
+            'org.mockito:mockito-core:2.23.4'
+    )
+}

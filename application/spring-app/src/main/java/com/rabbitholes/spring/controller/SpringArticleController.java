@@ -57,4 +57,13 @@ public class SpringArticleController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
+
+	@RequestMapping(value = "/articles/search/{articleTitle}", method = RequestMethod.GET)
+	public ResponseEntity searchArticle(@PathVariable("articleTitle") final String articleTitle) {
+		try{
+			return ResponseEntity.ok(controller.searchArticle(articleTitle));
+		} catch(RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
 }

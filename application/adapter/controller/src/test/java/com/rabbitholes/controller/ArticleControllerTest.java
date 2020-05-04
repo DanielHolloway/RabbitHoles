@@ -5,6 +5,7 @@ import com.rabbitholes.domain.entity.Article;
 import com.rabbitholes.usecase.CreateArticle;
 import com.rabbitholes.usecase.FindArticle;
 
+import com.rabbitholes.usecase.SearchArticle;
 import com.rabbitholes.usecase.exception.ArticleAlreadyExistsException;
 import com.rabbitholes.usecase.exception.ArticleValidationException;
 import org.junit.Assert;
@@ -26,8 +27,9 @@ public class ArticleControllerTest {
 
     CreateArticle createArticle = mock(CreateArticle.class);
     FindArticle findArticle = mock(FindArticle.class);
+    SearchArticle searchArticle = mock(SearchArticle.class);
 
-    ArticleController articleController = new ArticleController(createArticle, findArticle);
+    ArticleController articleController = new ArticleController(createArticle, findArticle, searchArticle);
 
     @Test
     public void createsAnArticleWeb() throws Exception {

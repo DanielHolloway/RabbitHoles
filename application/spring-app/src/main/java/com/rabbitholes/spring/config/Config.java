@@ -6,6 +6,7 @@ import com.rabbitholes.config.SpringConfig;
 import com.rabbitholes.controller.ArticleController;
 import com.rabbitholes.usecase.CreateArticle;
 import com.rabbitholes.usecase.FindArticle;
+import com.rabbitholes.usecase.SearchArticle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,7 +33,12 @@ public class Config {
 	}
 
 	@Bean
+	public SearchArticle searchArticle() {
+		return config.searchArticle();
+	}
+
+	@Bean
 	public ArticleController articleController() {
-		return new ArticleController(createArticle(), findArticle());
+		return new ArticleController(createArticle(), findArticle(), searchArticle());
 	}
 }
