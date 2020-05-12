@@ -43,3 +43,6 @@ README.html
 *.iml
 
 .vscode
+
+package-lock.json
+node_modules/
